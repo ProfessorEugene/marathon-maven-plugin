@@ -21,6 +21,9 @@
 
 package com.holidaycheck.marathon.maven;
 
+import com.google.common.collect.Iterables;
+import mesosphere.marathon.client.model.v2.App;
+import mesosphere.marathon.client.model.v2.Parameter;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
@@ -36,6 +39,9 @@ import java.io.File;
 
 @RunWith(JUnit4.class)
 public abstract class AbstractMarathonMojoTestWithJUnit4 extends AbstractMojoTestCase {
+
+    private static final String DOCKER_TEST_PARAM_KEY = "test";
+    private static final String DOCKER_TEST_PARAM_VALUE = "true";
 
     private String groupId;
     private String artifactId;
@@ -83,6 +89,13 @@ public abstract class AbstractMarathonMojoTestWithJUnit4 extends AbstractMojoTes
 
     protected Mojo lookupMarathonMojo(String goal, PlexusConfiguration pluginCfg) throws Exception {
         return lookupMojo(groupId, artifactId, version, goal, pluginCfg);
+    }
+
+    protected void assertContainerParameters(App app) {
+        Parameter testParameter = Iterables.getFirst(app.getContainer().getDocker().getParameters(), null);
+        assertNotNull(testParameter);
+        assertEquals(DOCKER_TEST_PARAM_KEY, testParameter.getKey());
+        assertEquals(DOCKER_TEST_PARAM_VALUE, testParameter.getValue());
     }
 
 

@@ -52,6 +52,7 @@ public class ProcessConfigMojoTest extends AbstractMarathonMojoTestWithJUnit4 {
 
         App app = Utils.readApp(getProcessedMarathonConfigFile());
         assertNotNull(app);
+        assertContainerParameters(app);
 
         String image = app.getContainer().getDocker().getImage();
         assertNotNull(image);

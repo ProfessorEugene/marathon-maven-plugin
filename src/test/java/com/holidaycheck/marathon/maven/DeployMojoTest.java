@@ -25,9 +25,9 @@ package com.holidaycheck.marathon.maven;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
-import mesosphere.marathon.client.model.v2.App;
-import mesosphere.marathon.client.MarathonException;
 import mesosphere.client.common.ModelUtils;
+import mesosphere.marathon.client.MarathonException;
+import mesosphere.marathon.client.model.v2.App;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.configuration.DefaultPlexusConfiguration;
@@ -90,6 +90,7 @@ public class DeployMojoTest extends AbstractMarathonMojoTestWithJUnit4 {
         App requestApp = ModelUtils.GSON.fromJson(createAppRequest.getBody().readUtf8(), App.class);
         assertNotNull(requestApp);
         assertEquals(APP_ID, requestApp.getId());
+        assertContainerParameters(requestApp);
     }
 
     @Test
@@ -114,6 +115,7 @@ public class DeployMojoTest extends AbstractMarathonMojoTestWithJUnit4 {
         App requestApp = ModelUtils.GSON.fromJson(updateAppRequest.getBody().readUtf8(), App.class);
         assertNotNull(requestApp);
         assertEquals(APP_ID, requestApp.getId());
+        assertContainerParameters(requestApp);
     }
 
     @Test
@@ -226,6 +228,7 @@ public class DeployMojoTest extends AbstractMarathonMojoTestWithJUnit4 {
         App requestApp = ModelUtils.GSON.fromJson(createAppRequest.getBody().readUtf8(), App.class);
         assertNotNull(requestApp);
         assertEquals(APP_ID, requestApp.getId());
+        assertContainerParameters(requestApp);
         
         RecordedRequest getDeploymentsRequest1 = server.takeRequest();
         assertEquals("/v2/deployments", getDeploymentsRequest1.getPath());
@@ -271,6 +274,7 @@ public class DeployMojoTest extends AbstractMarathonMojoTestWithJUnit4 {
         App requestApp = ModelUtils.GSON.fromJson(createAppRequest.getBody().readUtf8(), App.class);
         assertNotNull(requestApp);
         assertEquals(APP_ID, requestApp.getId());
+        assertContainerParameters(requestApp);
         
         RecordedRequest getDeploymentsRequest1 = server.takeRequest();
         assertEquals("/v2/deployments", getDeploymentsRequest1.getPath());

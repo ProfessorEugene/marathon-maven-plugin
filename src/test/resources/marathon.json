@@ -8,6 +8,12 @@
       "portMappings": [
         {"containerPort": 7070},
         {"containerPort": 7071}
+      ],
+      "parameters": [
+        {
+          "key": "test",
+          "value": "true"
+        }
       ]
     }
   },
