@@ -32,7 +32,7 @@ import java.io.Reader;
 import java.io.Writer;
 
 import mesosphere.marathon.client.model.v2.App;
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 import org.apache.maven.plugin.MojoExecutionException;
 
